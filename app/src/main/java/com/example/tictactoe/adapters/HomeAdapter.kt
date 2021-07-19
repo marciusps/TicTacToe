@@ -19,12 +19,10 @@ class HomeAdapter(
     class HomeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cell_image: ImageView
         val btn_cell: LinearLayout
-        val cell_text: TextView
 
         init {
             cell_image = view.findViewById(R.id.cell_image_id)
             btn_cell = view.findViewById(R.id.btn_cell)
-            cell_text = view.findViewById(R.id.cell_text)
         }
     }
 
@@ -42,10 +40,10 @@ class HomeAdapter(
         }
 
         holder.cell_image.setImageResource(imgRes)
-        holder.cell_text.text = dataSet[position]
 
         holder.btn_cell.setOnClickListener {
             onClick.invoke(dataSet[position], position)
+            notifyDataSetChanged()
         }
     }
 
@@ -54,7 +52,11 @@ class HomeAdapter(
     fun reset() {
         Manager.fillBoard()
         dataSet = Manager.board
-        notifyDataSetChanged()
         Manager.counter = 1
+        Manager.player1Turn = true
+        Manager.draw = false
+        Manager.player1 = false
+        Manager.player2 = false
+        notifyDataSetChanged()
     }
 }
